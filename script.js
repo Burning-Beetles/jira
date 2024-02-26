@@ -5,17 +5,27 @@ let todoContainer = document.getElementById("todo")
 addCardBtn.addEventListener("click", addingtask)
 
 function addingtask() {
+     let divCard = document.createElement("div")
+    divCard.className = "divCard"
      let card = document.createElement("div")
      card.className = "card"
-     card.innerHTML = "click to Edit"
-     todoContainer.append(card)
+    //  card.innerHTML = "click to Edit"
+    // card.setAttribute("placeholder","click to edit");
+     todoContainer.append(divCard)
+     divCard.append(card)
      card.setAttribute("contenteditable", "true")
      card.focus()
 
      card.addEventListener("blur", (eventDetails)=>{
           let targetCard = eventDetails.target 
+          let parentCard = targetCard.parentNode
+          console.log(parentCard)
+          console.log(targetCard)
+        //   console.log(targetCard.innerHTML)
+        //   console.log(targetCard.innerText)
+        //   console.log(targetCard.textContent)
           if(!targetCard.innerHTML.trim()){
-                targetCard.remove() // remove the card if it is empty
+              parentCard.remove() // remove the card if it is empty
           }
      })
 
@@ -25,18 +35,15 @@ function addingtask() {
         <option value="inProgress">InProgress</option>
         <option value="done">Done</option>
     `  
-    card.append(selector)
+    divCard.append(selector)
 
    selector.addEventListener("change", (eventDetails)=>{
 
-    //    let obj = {
-    //           todo1: "ToDo",
-    //           inProgress1: "InProgress",
-    //           done1: "Done"
-    //    }
        const status = eventDetails.target.value // id
 
-       document.getElementById(status).append(card)
+       let parentCard = eventDetails.target.parentNode
+
+       document.getElementById(status).append(parentCard)
    })
 
 }
